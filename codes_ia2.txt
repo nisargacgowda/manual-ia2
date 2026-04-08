@@ -1,0 +1,223 @@
+Basic calculator 
+2. Simple greeting msg (API) 
+3. Linear search 
+4. Compare 3 numbers and print highest number among three 
+5. Bank account ( balance, deposit n withdrawal)
+
+Give java code and javatest case code for the above programs
+
+Got you—clean, simple Java programs + JUnit 5 test cases for each. You can keep them in the same project (e.g., src/main/java and src/test/java).
+
+1️⃣ Basic Calculator
+✅ Java Code
+package devops;
+
+public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public double divide(int a, int b) {
+        if (b == 0) throw new ArithmeticException("Cannot divide by zero");
+        return (double) a / b;
+    }
+}
+🧪 Test Case
+package devops;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class CalculatorTest {
+
+    Calculator calc = new Calculator();
+
+    @Test
+    void testAdd() {
+        assertEquals(5, calc.add(2, 3));
+    }
+
+    @Test
+    void testSubtract() {
+        assertEquals(1, calc.subtract(3, 2));
+    }
+
+    @Test
+    void testMultiply() {
+        assertEquals(6, calc.multiply(2, 3));
+    }
+
+    @Test
+    void testDivide() {
+        assertEquals(2.0, calc.divide(4, 2));
+    }
+
+    @Test
+    void testDivideByZero() {
+        assertThrows(ArithmeticException.class, () -> calc.divide(4, 0));
+    }
+}
+2️⃣ Simple Greeting Message (API-style method)
+✅ Java Code
+package devops;
+
+public class GreetingService {
+
+    public String greet(String name) {
+        if (name == null || name.isEmpty()) {
+            return "Hello, Guest!";
+        }
+        return "Hello, " + name + "!";
+    }
+}
+🧪 Test Case
+package devops;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class GreetingServiceTest {
+
+    GreetingService service = new GreetingService();
+
+    @Test
+    void testGreetingWithName() {
+        assertEquals("Hello, Neha!", service.greet("Neha"));
+    }
+
+    @Test
+    void testGreetingWithoutName() {
+        assertEquals("Hello, Guest!", service.greet(""));
+    }
+}
+3️⃣ Linear Search
+✅ Java Code
+package devops;
+
+public class LinearSearch {
+
+    public int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+🧪 Test Case
+package devops;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class LinearSearchTest {
+
+    LinearSearch ls = new LinearSearch();
+
+    @Test
+    void testFound() {
+        int[] arr = {1, 2, 3, 4};
+        assertEquals(2, ls.search(arr, 3));
+    }
+
+    @Test
+    void testNotFound() {
+        int[] arr = {1, 2, 3, 4};
+        assertEquals(-1, ls.search(arr, 5));
+    }
+}
+4️⃣ Compare 3 Numbers (Highest)
+✅ Java Code
+package devops;
+
+public class MaxFinder {
+
+    public int findMax(int a, int b, int c) {
+        return Math.max(a, Math.max(b, c));
+    }
+}
+🧪 Test Case
+package devops;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class MaxFinderTest {
+
+    MaxFinder mf = new MaxFinder();
+
+    @Test
+    void testMax() {
+        assertEquals(9, mf.findMax(3, 9, 5));
+    }
+
+    @Test
+    void testNegative() {
+        assertEquals(-1, mf.findMax(-1, -5, -10));
+    }
+}
+5️⃣ Bank Account (Deposit & Withdrawal)
+✅ Java Code
+package devops;
+
+public class BankAccount {
+
+    private double balance;
+
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void deposit(double amount) {
+        if (amount <= 0) throw new IllegalArgumentException("Invalid deposit");
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= 0) throw new IllegalArgumentException("Invalid withdrawal");
+        if (amount > balance) throw new IllegalArgumentException("Insufficient balance");
+        balance -= amount;
+    }
+}
+🧪 Test Case
+package devops;
+
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class BankAccountTest {
+
+    @Test
+    void testDeposit() {
+        BankAccount acc = new BankAccount(100);
+        acc.deposit(50);
+        assertEquals(150, acc.getBalance());
+    }
+
+    @Test
+    void testWithdraw() {
+        BankAccount acc = new BankAccount(100);
+        acc.withdraw(40);
+        assertEquals(60, acc.getBalance());
+    }
+
+    @Test
+    void testInsufficientBalance() {
+        BankAccount acc = new BankAccount(100);
+        assertThrows(IllegalArgumentException.class, () -> acc.withdraw(200));
+    }
+}
